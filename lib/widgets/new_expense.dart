@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker/model/expense.dart';
 
-class NewExpense extends StatefulWidget{
-  const NewExpense({super.key});
 
+class NewExpense extends StatefulWidget{
+  const NewExpense({super.key, required this.onAddExpense});
+  final void Function(Expense expense) onAddExpense;
+  
+  
   @override
   State<NewExpense> createState() {
     return _ExpensesState();
@@ -16,7 +19,7 @@ class _ExpensesState extends State<NewExpense> {
   DateTime? _selectedDate;
   Category _selectedCategory = Category.food;
 
-  void DatePicker() async{
+  void datePicker() async{
     final now = DateTime.now();
     final fDate = DateTime(now.year - 1, now.month, now.day);
     final pickDate = await showDatePicker(
@@ -27,6 +30,33 @@ class _ExpensesState extends State<NewExpense> {
     setState(() {
       _selectedDate = pickDate;
     });
+  }
+
+  void _submitData(){
+    final enterAmount = double.tryParse(_amountController.text);
+    final amountInvalid = enterAmount == null || enterAmount<=0;
+    if(_titleController.text.trim().isEmpty || amountInvalid || _selectedDate == null){
+      showDialog(context: context,
+         builder: (ctx) => AlertDialog(
+          title: const Text('Invalid input'),
+          content: const Text('please make sure valid title,date and date'),
+          actions: [
+            TextButton(onPressed: (){
+              Navigator.pop(ctx);
+            },
+            child: const Text('ok'))
+          ],
+         ));
+      return;
+    } 
+    widget.onAddExpense(
+      Expense(
+        titile: _titleController.text,
+        amount: enterAmount,
+        date: _selectedDate!,
+        category: _selectedCategory)
+    );
+    Navigator.pop(context);
   }
 
 
@@ -71,7 +101,7 @@ class _ExpensesState extends State<NewExpense> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                 Text(_selectedDate == null ? 'no date selected':formatter.format(_selectedDate!)),
-                IconButton(onPressed: DatePicker, icon: const Icon(Icons.calendar_month))
+                IconButton(onPressed: datePicker, icon: const Icon(Icons.calendar_month))
               ],),
             )
           ],
@@ -100,9 +130,7 @@ class _ExpensesState extends State<NewExpense> {
               ),
             
           ElevatedButton(
-            onPressed: (){
-              print(_titleController.text);
-            }, 
+            onPressed: _submitData,
             child: const Text("save Expense")),
             ],
             ),

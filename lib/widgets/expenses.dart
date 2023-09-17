@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
 
+  
+
   @override
   State<Expenses> createState() {
     return _ExpensesState();
@@ -30,9 +32,40 @@ class _ExpensesState extends State<Expenses> {
 
 
   void _openAddExpess(){
-    showModalBottomSheet(context: context, builder: (ctx){
-      return const NewExpense();
+    showModalBottomSheet(
+      context: context,
+     builder: (ctx){
+      return NewExpense(onAddExpense: _addExpenses);
     });
+  }
+
+  void _addExpenses(Expense expense){
+    setState(() {
+      _registerExpense.add(expense);
+    });
+  }
+
+  void _removeExpense(Expense expense){
+    final expenseIndex = _registerExpense.indexOf(expense);
+    setState(() {
+      _registerExpense.remove(expense);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar( 
+        duration: const Duration(seconds: 3),
+        content: const Text("Deleted"),
+        action: SnackBarAction(
+          label: 'undo',
+          onPressed: (){ 
+            setState(() {
+              _registerExpense.insert(expenseIndex, expense);
+            });
+            
+          },
+          ),
+        )
+      );
   }
 
   @override
@@ -48,9 +81,9 @@ class _ExpensesState extends State<Expenses> {
         ),
       ]),
         body: Column(children: [
-      const Text("data"),
+      const Text("Expenses"),
       Expanded(child: 
-      ExpensesList(expenses: _registerExpense)
+      ExpensesList(expenses: _registerExpense, onRemove: _removeExpense,)
       )
     ]));
   }

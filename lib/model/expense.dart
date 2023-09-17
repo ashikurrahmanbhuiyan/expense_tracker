@@ -7,12 +7,12 @@ final formatter = DateFormat.yMMMd();
 
 enum Category{food,travel,leisure,work} 
 
-const CategoryIcon = {
+const categoryIcon = {
   Category.food: Icons.lunch_dining,
   Category.leisure: Icons.movie,
   Category.travel: Icons.flight_takeoff,
   Category.work : Icons.work,
-};
+}; 
 
 class Expense {
   Expense({
