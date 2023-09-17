@@ -37,6 +37,7 @@ class _ExpensesState extends State<NewExpense> {
     super.dispose();
 
   }
+  
 
   @override
   Widget build(BuildContext context) {
