@@ -78,7 +78,6 @@ class _ExpensesState extends State<NewExpense> {
         TextField(
           controller: _titleController,
           maxLength: 50,
-          keyboardType: TextInputType.number,
           decoration: const InputDecoration(
             label: Text('Title'),
           ),
