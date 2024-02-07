@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
            ),
         )
         ),
-      title: 'Flutter Demo',
+      title: 'Expense Tracker',
       home: const Expenses(),
     );
   }

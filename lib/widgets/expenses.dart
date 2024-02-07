@@ -17,7 +17,7 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registerExpense = [
       Expense(
-        titile: "flutter",
+        titile: "Kala vuna",
         amount: 19.99,
         date: DateTime.now(),
         category: Category.food
@@ -27,6 +27,18 @@ class _ExpensesState extends State<Expenses> {
         amount: 15.58,
         date: DateTime.now(),
         category: Category.leisure
+      ),
+      Expense(
+        titile: "Go Home",
+        amount: 19.99,
+        date: DateTime.now(),
+        category: Category.travel
+      ),
+      Expense(
+        titile: "Buy Laptop",
+        amount: 199.99,
+        date: DateTime.now(),
+        category: Category.work
       )
   ];
 
@@ -81,7 +93,6 @@ class _ExpensesState extends State<Expenses> {
         ),
       ]),
         body: Column(children: [
-      const Text("Expenses"),
       Expanded(child: 
       ExpensesList(expenses: _registerExpense, onRemove: _removeExpense,)
       )
