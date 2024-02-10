@@ -36,7 +36,7 @@ class _ExpensesState extends State<NewExpense> {
     final enterAmount = double.tryParse(_amountController.text);
     final amountInvalid = enterAmount == null || enterAmount<=0;
     if(_titleController.text.trim().isEmpty || amountInvalid || _selectedDate == null){
-      showDialog(context: context,
+      showAdaptiveDialog(context: context,
          builder: (ctx) => AlertDialog(
           title: const Text('Invalid input'),
           content: const Text('please make sure valid title,date and date'),
@@ -89,7 +89,7 @@ class _ExpensesState extends State<NewExpense> {
                 controller: _amountController,
                 maxLength: 50,
                 decoration: const InputDecoration(
-                  prefixText: '\$ ',
+                  prefixText: '৳ ',
                   label: Text('Amount'),
                 ),
               ),
